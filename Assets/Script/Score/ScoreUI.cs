@@ -5,6 +5,7 @@ public class ScoreUI : MonoBehaviour
 {
 	TextMeshProUGUI scoreText;
 
+	private int setScore = 0;
 	private int score;
 	
 	private void Awake()
@@ -22,15 +23,20 @@ public class ScoreUI : MonoBehaviour
 		scoreText.text = "Score: " + score;
 	}
 
-	public void IncreaseScore()
+	public void SetScoreIncrease(int _score)
 	{
-		score++;
+		setScore = _score;
+	}
+
+	public void IncreaseScore(int _increase)
+	{
+		score = score + _increase + setScore;
 	}
 
 	public void DecreaseScore()
 	{
 		if (score > 0)
-			score--;
+			score --;
 		else
 			score = 0;
 	}

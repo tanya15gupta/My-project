@@ -1,33 +1,44 @@
 using UnityEngine;
-using Player.Movement;
 public class Boundaries : MonoBehaviour
 {
-	BoxCollider2D boundaryCollider;
-
+	[SerializeField]
+	GameObject snake;
+	float xPositionWarp;
+	float yPositionWarp;
+	Transform snakePosition;
+	float addValue = 1f;
 	private void Start()
 	{
-		boundaryCollider = gameObject.GetComponent<BoxCollider2D>();
+		xPositionWarp = 21f;
+		yPositionWarp = 10f;
 	}
-	private void OnTriggerExit2D(Collider2D collision)
+
+	private void Update()
 	{
-		if (collision.GetComponent<SnakeController>())
+		SnakeWarping();
+	}
+
+	private void SnakeWarping()
+	{
+		snakePosition = snake.transform;
+		if (snakePosition.transform.position.x > xPositionWarp)
 		{
-			if (collision.transform.position.x > 21.5)
-			{
-				collision.transform.position = new Vector3(-boundaryCollider.size.x / 2, collision.transform.position.y, 0);
-			}
-			if (collision.transform.position.x < -21.5)
-			{
-				collision.transform.position = new Vector3(boundaryCollider.size.x / 2, collision.transform.position.y, 0);
-			}
-			if (collision.transform.position.y > 10.5)
-			{
-				collision.transform.position = new Vector3(collision.transform.position.x, -boundaryCollider.size.y / 2, 0);
-			}
-			if (collision.transform.position.y < -10.5)
-			{
-				collision.transform.position = new Vector3(collision.transform.position.x, boundaryCollider.size.y / 2, 0);
-			}
+			snakePosition.transform.position = new Vector3(-snakePosition.transform.position.x + addValue, snakePosition.transform.position.y, 0.0f);
+		}
+
+		if (snakePosition.transform.position.x < -xPositionWarp)
+		{
+			snakePosition.transform.position = new Vector3(-snakePosition.transform.position.x - addValue, snakePosition.transform.position.y, 0.0f);
+		}
+
+		if (snakePosition.transform.position.y > yPositionWarp)
+		{
+			snakePosition.transform.position = new Vector3(snakePosition.transform.position.x, -snakePosition.transform.position.y + addValue, 0.0f);
+		}
+
+		if (snakePosition.transform.position.y < -yPositionWarp)
+		{
+			snakePosition.transform.position = new Vector3(snakePosition.transform.position.x, -snakePosition.transform.position.y - addValue, 0.0f);
 		}
 	}
 }

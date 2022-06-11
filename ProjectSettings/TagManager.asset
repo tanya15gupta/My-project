@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Food
   - Poison
+  - SnakeBody
+  - SpeedBoost
+  - ScoreBoost
+  - Shield
   layers:
   - Default
   - TransparentFX

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6000570667850997214}
   - component: {fileID: 6000570667850997209}
   - component: {fileID: 6000570667850997208}
+  - component: {fileID: 1849972133}
   m_Layer: 0
   m_Name: SnakeHead
   m_TagString: Untagged
@@ -145,3 +146,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.13
+  scoreUpdate: {fileID: 0}
+  speedBoost: 0.05
+  isSpeedBoostActive: 0
+  isScoreBoostActive: 0
+  right: 100
+  left: 97
+  up: 119
+  down: 115
+  snakeBodyPrefab: {fileID: 5330850250036403425, guid: d9c0a280d08b6c349a9ecb7f9e2b759a, type: 3}
+  gameOver: {fileID: 0}
+--- !u!114 &1849972133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6000570667850997205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32ce8819da014624b89637cfe3f5d1b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnBound: {fileID: 0}
+  food: {fileID: 0}
+  antiFood: {fileID: 0}
+  scoreUpdate: {fileID: 0}
+  consumables:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
