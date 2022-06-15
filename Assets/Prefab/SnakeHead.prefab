@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 6000570667850997209}
   - component: {fileID: 6000570667850997208}
   - component: {fileID: 1849972133}
+  - component: {fileID: 1849972139}
+  - component: {fileID: 952028467}
   m_Layer: 0
   m_Name: SnakeHead
   m_TagString: Untagged
@@ -76,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.5660378, g: 0, b: 0.050736737, a: 1}
+  m_Color: {r: 0.4447134, g: 0.66600865, b: 0.6792453, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -146,15 +148,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.13
+  playerNextDirection: {x: -1, y: 0}
   scoreUpdate: {fileID: 0}
   speedBoost: 0.05
   isSpeedBoostActive: 0
   isScoreBoostActive: 0
-  right: 100
-  left: 97
-  up: 119
-  down: 115
-  snakeBodyPrefab: {fileID: 5330850250036403425, guid: d9c0a280d08b6c349a9ecb7f9e2b759a, type: 3}
+  right: 275
+  left: 276
+  up: 273
+  down: 274
+  snakeBodyPrefab: {fileID: 6726515420733822778, guid: ab3d21580710d7f4eb98196579c4651c, type: 3}
+  snakeSpawn: {fileID: 1849972133}
   gameOver: {fileID: 0}
 --- !u!114 &1849972133
 MonoBehaviour:
@@ -169,12 +173,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnBound: {fileID: 0}
-  food: {fileID: 0}
-  antiFood: {fileID: 0}
-  scoreUpdate: {fileID: 0}
   consumables:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &1849972139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6000570667850997205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d3bfb13eb09f642ab328822d02c652, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  snake: {fileID: 6000570667850997205}
+--- !u!114 &952028467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6000570667850997205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d3bfb13eb09f642ab328822d02c652, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  snake: {fileID: 6000570667850997205}

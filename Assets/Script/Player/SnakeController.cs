@@ -8,31 +8,49 @@ namespace Player.Movement
     [RequireComponent(typeof(BoxCollider2D))]
     public class SnakeController : MonoBehaviour
     {
+
+        //player movement
         [Range(0, 1)]
         public float speed;
         private float time;
         private Vector2 playerDirection;
-        private Vector2 playerNextDirection = Vector2.up;
+        public Vector2 playerNextDirection = Vector2.left;
 
+        //player score
         [SerializeField]
         ScoreUI scoreUpdate;
+
+        //Power-ups
         public float speedBoost;
         bool isShieldActive = false;
         public bool isSpeedBoostActive = false;
         public bool isScoreBoostActive = false;
+
+        //show power-ups when activated
+        public GameObject shield;
+        public GameObject scoreBoost;
+        public GameObject speedBooster;
+
+        //Controls
         [SerializeField]
         private KeyCode right, left, up, down;
 
+        //snake length manipulation and body follow
         private List<Transform> snakeBody = new List<Transform>(); 
         [SerializeField]
         private Transform snakeBodyPrefab;
         private int initialSize = 3;
         private Transform snakeTailPosition;
+
+        //spawning consumables
         [SerializeField]
-        Spawner snakeSpawn;
+        Spawner consumablesSpawn;
+
+        //activating game over screen
         [SerializeField]
         GameOver gameOver;
 
+        public GameObject playerWonUI;
 
 		private void Start()
 		{
@@ -60,6 +78,7 @@ namespace Player.Movement
             if (collision.gameObject.tag == "SnakeBody" && !isShieldActive)
 			{
                 gameOver.SetPanelActive();
+                StopAllCoroutines();
             }
                 
             if (collision.gameObject.tag == "SpeedBoost")
@@ -89,7 +108,7 @@ namespace Player.Movement
 
         public void SnakeShrink()
         {
-            if (snakeBody.Count > 4)
+            if (snakeBody.Count > 3)
 			{
                 Destroy(snakeBody[snakeBody.Count - 1].gameObject);
                 snakeBody.RemoveAt(snakeBody.Count - 1);
@@ -98,7 +117,11 @@ namespace Player.Movement
 
         private void SnakeReset()
 		{
-            for(int i = 1; i < snakeBody.Count; i++)
+            gameOver.SetPlayerWonUI(playerWonUI);
+            shield.SetActive(false);
+            speedBooster.SetActive(false);
+            scoreBoost.SetActive(false);
+            for (int i = 1; i < snakeBody.Count; i++)
 			{
                 Destroy(snakeBody[i].gameObject);
 			}
@@ -110,7 +133,7 @@ namespace Player.Movement
                 SnakeGrow();
             }
 
-            snakeSpawn.Reposition(this.gameObject);
+            consumablesSpawn.Reposition(this.gameObject);
 		}
 
         public void SnakeBodyFollowing()
@@ -122,59 +145,37 @@ namespace Player.Movement
 		}
 
         void SnakeMovement()
-		{
+        {
             time += Time.deltaTime;
             PlayerDirectionInput();
-            playerDirection = playerNextDirection;
+            
             if (time > speed)
-			{
+            {
+                playerDirection = playerNextDirection;
                 SnakeBodyFollowing();
                 transform.position = new Vector3(Mathf.Round(transform.position.x) + playerDirection.x, Mathf.Round(transform.position.y) + playerDirection.y, 0.0f);
                 time = 0;
-			}
+            }
         }
-
-		/*void PlayerDirectionInput()
-		{
-			if (Input.GetKey(right) && playerDirection != Vector2.left)
-			{
-				playerDirection = Vector2.right;
-			}
-
-			if (Input.GetKey(left) && playerDirection != Vector2.right)
-			{
-				playerDirection = Vector2.left;
-			}
-
-			if (Input.GetKey(up) && playerDirection != Vector2.down)
-			{
-				playerDirection = Vector2.up;
-			}
-
-			if (Input.GetKey(down) && playerDirection != Vector2.up)
-			{
-				playerDirection = Vector2.down;
-			}
-		}*/
 
 		void PlayerDirectionInput()
 		{
-			if (Input.GetKey(right) && playerNextDirection != Vector2.left)
+			if (Input.GetKey(right) && playerDirection != Vector2.left)
 			{
 				playerNextDirection = Vector2.right;
 			}
 
-			if (Input.GetKey(left) && playerNextDirection != Vector2.right)
+			if (Input.GetKey(left) && playerDirection != Vector2.right)
 			{
 				playerNextDirection = Vector2.left;
 			}
 
-			if (Input.GetKey(up) && playerNextDirection != Vector2.down)
+			if (Input.GetKey(up) && playerDirection != Vector2.down)
 			{
 				playerNextDirection = Vector2.up;
 			}
 
-			if (Input.GetKey(down) && playerNextDirection != Vector2.up)
+			if (Input.GetKey(down) && playerDirection != Vector2.up)
 			{
 				playerNextDirection = Vector2.down;
 			}
@@ -183,6 +184,7 @@ namespace Player.Movement
         //Power-Ups
         public void SpeedUp()
 		{
+            speedBooster.SetActive(true);
             isSpeedBoostActive = true;
             speed -= speedBoost;
             StartCoroutine(CoolDownTime());
@@ -190,7 +192,7 @@ namespace Player.Movement
 
         public void ScoreBoost()
 		{
-
+            scoreBoost.SetActive(true);
             isScoreBoostActive = true;
             scoreUpdate.SetScoreIncrease(4);
             StartCoroutine(CoolDownTime());
@@ -198,6 +200,7 @@ namespace Player.Movement
 
         public void Shield()
 		{
+            shield.SetActive(true);
             isShieldActive = true;
             StartCoroutine(CoolDownTime());
 		}
@@ -209,18 +212,21 @@ namespace Player.Movement
 
             if (isSpeedBoostActive)
 			{
+                speedBooster.SetActive(false);
                 speed += speedBoost;
                 isSpeedBoostActive = false;
             }
                 
             if (isScoreBoostActive)
 			{
+                scoreBoost.SetActive(false);
                 scoreUpdate.SetScoreIncrease(0);
                 isScoreBoostActive = false;
             }
 
             if (isShieldActive)
 			{
+                shield.SetActive(false);
                 isShieldActive = false;
 			}
         }

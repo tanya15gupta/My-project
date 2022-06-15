@@ -14,14 +14,10 @@ public class Spawner : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.gameObject.tag == "Food")
-		{
 			Reposition(consumables[0]);
-		}
 
 		if (collision.gameObject.tag == "Poison")
-		{
 			Reposition(consumables[1]);
-		}
 
 		if(collision.gameObject.tag == "SpeedBoost")
 			PowerUpsSpawn(2);
@@ -31,6 +27,9 @@ public class Spawner : MonoBehaviour
 			
 		if (collision.gameObject.tag == "Shield")
 			PowerUpsSpawn(4);
+
+		if (collision.gameObject.tag == "SnakeBody")
+			StopAllCoroutines();
 	}
 
 	void SetBoard()

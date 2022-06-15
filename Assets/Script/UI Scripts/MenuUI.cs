@@ -1,7 +1,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
-public class StartMenuUI : MonoBehaviour
+public class MenuUI : MonoBehaviour
 {
 	public void SoloGameSelected()
 	{
@@ -13,8 +13,19 @@ public class StartMenuUI : MonoBehaviour
 		SceneManager.LoadScene(2);
 	}
 
+	public void Restart()
+	{
+		SceneManager.LoadScene(2);
+	}
+
+	public void MainMenu()
+	{
+		SceneManager.LoadScene(0);
+	}
+
 	public void QuitApplication()
 	{
 		Application.Quit();
 	}
+
 }
